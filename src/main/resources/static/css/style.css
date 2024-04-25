@@ -1,0 +1,234 @@
+/* style.css */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f0f0;
+  color: #4A154B;
+  line-height: 1.6;
+  padding: 0 30px;
+}
+
+.container {
+  width: 90%;
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.page-container {
+  margin: 0 auto; /* This centers your container */
+  padding: 20px;
+  max-width: 1200px;
+}
+
+.header-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #FADDE1;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+
+.alert {
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.alert-success {
+  background-color: #ffebef; /* Light Pink */
+  color: #d63384; /* Strong Pink */
+  border-color: #d63384; /* Strong Pink */
+}
+
+.alert-danger {
+  background-color: #fff0f3; /* Very Light Pink */
+  color: #c82333; /* Strong Red */
+  border-color: #c82333; /* Strong Red */
+}
+
+.nav-container a {
+  font-size: 1.2em;
+  padding: 10px 15px;
+  color: #5d2c5c;
+  text-decoration: none;
+  transition: color 0.3s ease; /* Create smooth transition for hover effects */
+  font-weight: bold;
+}
+
+.nav-container a:hover, .nav-container a:focus {
+  color: #d63384;
+  text-decoration: underline;  /* Add underline on hover/focus for better visual feedback */
+  font-weight: bold;
+}
+
+.nav-container {
+  padding-bottom: 10px;
+  border-bottom: 2px solid #5d2c5c;  /* Adds a subtle line below the navigation bar for visual separation */
+  margin-bottom: 30px;
+}
+
+
+.logout input[type="submit"] {
+  min-width: 80px;
+  padding: 8px 15px;
+  background-color: #E91E63;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Create smooth transition for hover effect */
+  margin-left: 10px;
+}
+
+.logout input[type="submit"]:hover {
+  background-color: #AD1457;
+}
+
+.form-group {
+  margin: 20px 0;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #4A154B;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="date"],
+select,
+textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #E2D5DE;
+  font-size: 16px;
+  color: #4A154B;
+}
+
+input[type="submit"],
+button {
+  width: 50%;
+  padding: 12px;
+  margin: 10px auto;
+  background-color: #E91E63;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover,
+button:hover {
+  background-color: #AD1457;
+}
+
+.footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #FADDE1;
+  border-radius: 10px;
+  margin-top: 30px;
+}
+
+.status-approved {
+  color: #42a05a;
+}
+
+.status-rejected {
+  color: #dc3545;
+}
+
+.status-pending {
+  color: #4b5057;
+}
+
+table {
+  width: 100%;
+  max-width: 800px;
+  margin: 20px auto; /* Centering table */
+  border-collapse: collapse;
+}
+
+th,
+td {
+  text-align: center; /* Centering text in cells */
+  padding: 8px;
+  border-bottom: 2px solid #FADDE1;
+}
+
+tr:nth-child(even) {
+  background-color: #ffebef;
+}
+
+th {
+  background-color: #E91E63;
+  color: white;
+  border-bottom-color: #AD1457;
+}
+
+.home-content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.left-column,
+.right-column {
+  flex: 1;
+  min-width: 300px; /* Prevents columns from becoming too narrow */
+  padding: 0 10px; /* Adds some spacing between the columns */
+}
+
+/* For smaller screens, make the columns stack on top of each other */
+@media (max-width: 768px) {
+  .home-content {
+    flex-direction: column;
+  }
+
+  .left-column,
+  .right-column {
+    min-width: auto;
+    max-width: 100%;
+  }
+}
+
+.well-being-tips {
+  border: 2px dashed #E91E63;
+  padding: 20px;
+  margin: 20px 0;
+  background-color: #fff0f3;
+  box-shadow: 0px 8px 15px rgba(233, 30, 99, 0.2);
+}
+
+.well-being-tips h3 {
+  border-bottom: 1px solid #E91E63;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+  color: #AD1457;
+  font-style: italic;
+}
+

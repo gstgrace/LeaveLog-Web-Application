@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apply Leave</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+</head>
+<body>
+<div class="page-container">
+  <div class="header-main">
+    <h2>Leave Management System</h2>
+    <div class="user-info">
+      <span th:text="'Logged in as: ' + ${#authentication.principal.username} + ' (' + ${#authentication.principal.authorities} + ')'"></span>
+      <form action="/logout" method="post" class="logout">
+        <input type="submit" value="Logout">
+      </form>
+    </div>
+  </div>
+
+  <nav class="nav-container">
+  <div class="content">
+    <a href="/user/home">Home</a>
+    <th:block th:if="${#authorization.expression('hasAuthority(''Manager'')')}"> | </th:block>
+    <a th:if="${#authorization.expression('hasAuthority(''Manager'')')}" href="/user/manage-users">Manage Users</a>
+    <th:block th:if="${#authorization.expression('hasAuthority(''Manager'')')}"> | </th:block>
+    <a th:if="${#authorization.expression('hasAuthority(''Manager'')')}" href="/user/manage-leaves">Manage Leaves</a>
+    <th:block th:if="${#authorization.expression('hasAnyAuthority(''Manager'', ''Employee'')')}"> | </th:block>
+    <a href="/user/apply-leave">Apply Leave</a>
+    <span> | </span>
+    <a href="/user/my-leaves">My Leaves</a>
+    <span> | </span>
+    <a href="/user/change-password">Change Password</a>
+  </div>
+  </nav>
+
+  <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}">
+  </div>
+  <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}">
+  </div>
+  <h2>Apply for Leave</h2>
+  <form action="/user/apply-leave" method="post" th:object="${leaveDetails}">
+    <label>From Date:
+      <input type="date" name="fromDate" required th:field="*{fromDate}">
+    </label>
+    <br>
+    <label>To Date:
+      <input type="date" name="toDate" required th:field="*{toDate}">
+    </label>
+    <br>
+    <label>Leave Type:
+      <select name="leaveType" required th:field="*{leaveType}">
+        <option value="">Select</option>
+        <option th:each="type : ${leaveTypes}" th:if="${!type.typeName.equals('Company Holiday')}"
+                th:value="${type.id}"
+                th:text="${type.typeName}">Type</option>
+      </select>
+    </label>
+    <br>
+    <label>Reason for Leave:
+      <textarea name="reason" required th:field="*{reason}"></textarea>
+    </label>
+    <br>
+    <button type="submit">Apply Leave</button>
+  </form>
+
+  <div class="home-content">
+    <div class="left-column">
+  <div class="leave-balance">
+    <h3>Your LeaveLog Balances</h3>
+    <table>
+      <thead>
+      <tr>
+        <th>Leave Type</th>
+        <th>Current Balance(Unit: day)</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="balance : ${balances}">
+        <td th:text="${balance.leaveType.typeName}">Leave Type</td>
+        <td th:text="${balance.currentBalance}">0</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+    </div>
+
+    <div class="right-column">
+  <div class="company-holidays">
+    <h3>2024 Company Holidays</h3>
+    <table>
+      <thead>
+      <tr>
+        <th>Date</th>
+        <th>Holiday</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>Monday, January 1st 2024</td>
+        <td>New Year's Day</td>
+      </tr>
+      <tr>
+        <td>Monday, January 15th 2024</td>
+        <td>Martin Luther King Jr. Day</td>
+      </tr>
+      <tr>
+        <td>Monday, February 19th 2024</td>
+        <td>Presidents' Day</td>
+      </tr>
+      <tr>
+        <td>Monday, May 27th 2024</td>
+        <td>Memorial Day</td>
+      </tr>
+      <tr>
+        <td>Wednesday, July 3rd 2024</td>
+        <td>Independence Day (Observed)</td>
+      </tr>
+      <tr>
+        <td>Thursday, July 4th 2024</td>
+        <td>Independence Day</td>
+      </tr>
+      <tr>
+        <td>Monday, September 2nd 2024</td>
+        <td>Labor Day</td>
+      </tr>
+      <tr>
+        <td>Wednesday, November 27th 2024</td>
+        <td>Day Before Thanksgiving</td>
+      </tr>
+      <tr>
+        <td>Thursday, November 28th 2024</td>
+        <td>Thanksgiving Day</td>
+      </tr>
+      <tr>
+        <td>Friday, November 29th 2024</td>
+        <td>Day after Thanksgiving</td>
+      </tr>
+      <tr>
+        <td>Tuesday, December 24th 2024</td>
+        <td>Christmas Eve</td>
+      </tr>
+      <tr>
+        <td>Wednesday, December 25th 2024</td>
+        <td>Christmas Day</td>
+      </tr>
+      <tr>
+        <td>Thursday, December 26th 2024</td>
+        <td>Day after Christmas</td>
+      </tr>
+      <tr>
+        <td>Tuesday, December 31st 2024</td>
+        <td>New Year's Eve</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2024 Shuting's LeaveLog System. All Rights Reserved.</p>
+  </footer>
+</div>
+</body>
+</html>

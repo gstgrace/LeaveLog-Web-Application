@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+</head>
+<body>
+<div class="container">
+  <h2>Sign Up</h2>
+  <form th:action="@{/registration}" th:method="post" th:object="${employee}">
+    <div class="form-group">
+      <label for="firstName">First Name:</label>
+      <input type="text" id="firstName" th:field="*{firstName}" required placeholder="First Name">
+    </div>
+    <div class="form-group">
+      <label for="lastName">Last Name:</label>
+      <input type="text" id="lastName" th:field="*{lastName}" required placeholder="Last Name">
+    </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" th:field="*{email}" required placeholder="E-mail">
+    </div>
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" id="password" th:field="*{password}" required>
+    </div>
+    <div class="form-group">
+      <label for="onboardingDate">Onboarding Date:</label>
+      <input type="date" id="onboardingDate" th:field="*{onboardingDate}" required>
+    </div>
+    <div class="form-group">
+      <label for="managerId">Manager:</label>
+      <select id="managerId" name="managerId" required>
+        <option value="">Select a Manager</option>
+        <option th:each="manager : ${managers}" th:value="${manager.id}" th:text="${manager.firstName} + ' ' + ${manager.lastName}"></option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Role:</label>
+      <label><input type="radio" th:field="*{role}" value="Manager"> Manager</label>
+      <label><input type="radio" th:field="*{role}" value="Employee"> Employee</label>
+    </div>
+    <input type="submit" value="Sign Up">
+  </form>
+  <div class="back">
+    <a href="/login">LOGIN</a>
+  </div>
+<div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}">
+</div>
+<div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}">
+</div>
+<footer>
+  <p>&copy; 2024 Shuting's LeaveLog System. All Rights Reserved.</p>
+</footer>
+</div>
+</body>
+</html>

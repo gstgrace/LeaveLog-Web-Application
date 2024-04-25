@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leave Management System</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+</head>
+<body>
+<div class="container">
+  <h2>Leave Management System</h2>
+  <form action="/login" method="post">
+    <input type="hidden" name="_csrf" value="">
+    <div class="error-message">
+    </div>
+    <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}">
+    </div>
+    <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}">
+    </div>
+    <div>
+      <span>Username:</span>
+      <input type="text" id="email" name="email" required>
+    </div>
+    <div>
+      <span>Password:</span>
+      <input type="password" id="password" name="password" required>
+    </div>
+    <div>
+      <input type="checkbox" name="remember">
+      <label>Remember me</label>
+    </div>
+    <div>
+      <input type="submit" value="Sign In">
+    </div>
+  </form>
+  <div class="back">
+    <a href="/registration">Register</a>
+  </div>
+  <div class="footer">
+    <p>&copy; 2024 Shuting's LeaveLog System. All Rights Reserved</p>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var errorParam = new URLSearchParams(window.location.search).get('error');
+    if (errorParam) {
+      var errorMessageDiv = document.querySelector('.error-message');
+      errorMessageDiv.textContent = 'Invalid username or password.';
+      errorMessageDiv.style.display = 'block'; // Display the error message
+    }
+  });
+</script>
+</body>
+</html>

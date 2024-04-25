@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Manage Leaves</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+</head>
+<body>
+<div class="page-container">
+  <div class="header-main">
+    <h2>Leave Management System</h2>
+    <div class="user-info">
+      <span th:text="'Logged in as: ' + ${#authentication.principal.username} + ' (' + ${#authentication.principal.authorities} + ')'"></span>
+      <form action="/logout" method="post" class="logout">
+        <input type="submit" value="Logout">
+      </form>
+    </div>
+  </div>
+
+  <nav class="nav-container">
+      <a href="/user/home">Home</a> |
+      <a th:if="${#authorization.expression('hasAuthority(''Manager'')')}" href="/user/manage-users">Manage Users</a> |
+      <a href="/user/apply-leave">Apply Leave</a> |
+      <a href="/user/my-leaves">My Leaves</a> |
+      <a href="/user/change-password">Change Password</a>
+    <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}">
+    </div>
+    <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}">
+    </div>
+  </nav>
+
+  <div class="content">
+    <h2>Manage Leaves</h2>
+    <table>
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>From Date</th>
+        <th>To Date</th>
+        <th>No of Days</th>
+        <th>Leave Type</th>
+        <th>Reason</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="leave : ${leavesList}">
+        <td th:text="${leave.employeeName}">John Doe</td>
+        <td th:text="${#temporals.format(leave.fromDate, 'dd MMM yyyy')}">01 Jan 2024</td>
+        <td th:text="${#temporals.format(leave.toDate, 'dd MMM yyyy')}">05 Jan 2024</td>
+        <td th:text="${leave.duration}">5</td>
+        <td th:text="${leave.leaveType.typeName}">Vacation</td>
+        <td th:text="${leave.reason}">Family trip</td>
+        <td>
+            <span th:text="${leave.status}"
+                  th:classappend="${leave.status == 'APPROVED' ? 'status-approved' : leave.status == 'REJECTED' ? 'status-rejected' : ''}">
+              Pending
+            </span>
+          <div th:if="${leave.status == 'PENDING'}">
+            <a th:href="@{'/user/manage-leaves/accept/' + ${leave.id}}" style="color: green;">Accept</a> |
+            <a th:href="@{'/user/manage-leaves/reject/' + ${leave.id}}" style="color: red;">Reject</a>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <footer>
+    <p>&copy; 2024 Shuting's LeaveLog System. All Rights Reserved</p>
+  </footer>
+</div>
+</body>
+</html>

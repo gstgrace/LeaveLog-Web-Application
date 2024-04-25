@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Manage Users</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+</head>
+<body>
+<div class="page-container">
+  <div class="header-main">
+    <h1>Leave Management System</h1>
+    <div class="user-info">
+      <span th:text="'Logged in as: ' + ${#authentication.principal.username} + ' (' + ${#authentication.principal.authorities} + ')'"></span>
+      <form action="/logout" method="post" class="logout">
+        <input type="submit" value="Logout">
+      </form>
+    </div>
+  </div>
+  <nav class="nav-container">
+    <a href="/user/home">Home</a> |
+    <a th:if="${#authorization.expression('hasAuthority(''Manager'')')}" href="/user/manage-leaves">Manage Leaves</a> |
+    <a href="/user/apply-leave">Apply Leave</a> |
+    <a href="/user/my-leaves">My Leaves</a> |
+    <a href="/user/change-password">Change Password</a>
+  </nav>
+
+  <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}">
+  </div>
+  <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}">
+  </div>
+
+
+  <div class="content">
+    <h2>Manage Users</h2>
+    <table>
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>E-mail</th>
+        <th>Role</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="user : ${users}">
+        <td th:text="${user.firstName} + ' ' + ${user.lastName}">John Doe</td>
+        <td th:text="${user.email}">johndoe@example.com</td>
+        <td th:text="${user.role}">User</td>
+        <td>
+          <a th:href="@{/user/manage-users/edit/{id}(id=${user.id})}">Edit</a>
+          <a th:href="@{/user/manage-users/block/{id}(id=${user.id})}" th:if="${user.active}">Block</a>
+          <a th:href="@{/user/manage-users/unblock/{id}(id=${user.id})}" th:if="${!user.active}">Unblock</a>
+          <a th:href="@{/user/manage-users/delete/{id}(id=${user.id})}">Delete</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <footer>
+    <p>&copy; 2024 Shuting's LeaveLog System. All Rights Reserved</p>
+  </footer>
+</div>
+</body>
+</html>

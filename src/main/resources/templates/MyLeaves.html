@@ -1,0 +1,86 @@
+ <!DOCTYPE html>
+  <html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>My Leaves</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+  </head>
+  <body>
+  <div class="page-container">
+    <div class="header-main">
+      <h2>Leave Management System</h2>
+      <div class="user-info">
+        <span th:text="'Logged in as: ' + ${#authentication.principal.username} + ' (' + ${#authentication.principal.authorities} + ')'"></span>
+        <form action="/logout" method="post" class="logout">
+          <input type="submit" value="Logout">
+        </form>
+      </div>
+    </div>
+
+    <nav class="nav-container">
+      <a href="/user/home">Home</a>
+      <th:block th:if="${#authorization.expression('hasAuthority(''Manager'')')}"> | </th:block>
+      <a th:if="${#authorization.expression('hasAuthority(''Manager'')')}" href="/user/manage-users">Manage Users</a>
+      <th:block th:if="${#authorization.expression('hasAuthority(''Manager'')')}"> | </th:block>
+      <a th:if="${#authorization.expression('hasAuthority(''Manager'')')}" href="/user/manage-leaves">Manage Leaves</a>
+      <th:block th:if="${#authorization.expression('hasAnyAuthority(''Manager'', ''Employee'')')}"> | </th:block>
+      <a href="/user/apply-leave">Apply Leave</a>
+      <span> | </span>
+      <a href="/user/my-leaves">My Leaves</a>
+      <span> | </span>
+      <a href="/user/change-password">Change Password</a>
+    </nav>
+
+    <h2>My Leaves</h2>
+    <table>
+      <thead>
+      <tr>
+        <th>From Date</th>
+        <th>To Date</th>
+        <th>No of Days</th>
+        <th>Leave Type</th>
+        <th>Reason</th>
+        <th>Status</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="leave : ${leavesList}">
+        <td th:text="${#temporals.format(leave.fromDate, 'dd MMM yyyy')}"></td>
+        <td th:text="${#temporals.format(leave.toDate, 'dd MMM yyyy')}"></td>
+        <td th:text="${leave.duration}"></td>
+        <td th:text="${leave.leaveType}"></td>
+        <td th:text="${leave.reason}"></td>
+        <td th:switch="${leave.status}">
+          <span th:case="'APPROVED'" class="status-approved" th:text="${leave.status}"></span>
+          <span th:case="'REJECTED'" class="status-rejected" th:text="${leave.status}"></span>
+          <span th:case="'PENDING'" class="status-pending" th:text="${leave.status}"></span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <footer>
+      <p>&copy; 2024 Your Company. All Rights Reserved</p>
+    </footer>
+  </body>
+  </html>
+
+  <div>
+    <form action="/user/my-leaves" method="get">
+      <label for="status">Filter by status:</label>
+      <select id="status" name="status">
+        <option value="">All</option>
+        <option value="PENDING">Pending</option>
+        <option value="APPROVED">Approved</option>
+        <option value="REJECTED">Rejected</option>
+      </select>
+      <button type="submit">Apply Filter</button>
+    </form>
+  </div>
+ <footer>
+   <p>&copy; 2024 Shuting's LeaveLog System. All Rights Reserved.</p>
+ </footer>
+  </div>
+  </body>
+  </html>
