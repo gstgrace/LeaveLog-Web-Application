@@ -33,7 +33,7 @@ Both the slides deck and the video demo are available in thie repo should there 
 
 ### Default Login Credentials
 Use the following credentials to log in and interact with the system:
-- **Email**: `manager1@email.com`
+- **Email**: `manager1@email.com` or any of the email address in the picture below
 - **Password**: `123456`
 
 ![Default dataset example](img_2.png)
